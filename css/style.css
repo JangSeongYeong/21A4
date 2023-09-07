@@ -1,0 +1,15 @@
+#webcam1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%; /* Set the width to 50% to make it take up the left half of the screen */
+    height: 100%; /* Set the height to 100% to take up the full height of the screen */
+}
+
+#webcam2 {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50%; /* Set the width to 50% to make it take up the right half of the screen */
+    height: 100%; /* Set the height to 100% to take up the full height of the screen */
+}

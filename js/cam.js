@@ -1,9 +1,9 @@
-const webcamElement1 = document.getElementById('webcam1');
-const webcamElement2 = document.getElementById('webcam2');
+const webcamElement1 = document.querySelector("#webcam1");
+const webcamElement2 = document.querySelector("#webcam2");
 
 // 첫번째 카메라 시작 함수
 async function startCamera1() {
-const constraints = { video: { facingMode: 'user' } };
+    const constraints = { video: { facingMode: 'user' } };
     try {
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
         webcamElement1.srcObject = stream;

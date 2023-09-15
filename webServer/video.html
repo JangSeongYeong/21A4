@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Video Streaming</title>
+</head>
+<body>
+    <img id="videoOutput" width="640" height="480">
+    <script>
+        const video = document.getElementById("videoOutput");
+        const url = "ws://ip주소:8765";  // 파이썬 웹 소켓 서버 주소
+
+        const ws = new WebSocket(url);
+
+        ws.onopen = function () {
+            console.log("WebSocket is connected.");
+        };
+
+        ws.onmessage = function (event) {
+            const frameData = event.data;
+            const img = new Image();
+            img.src = "data:image/jpeg;base64," + frameData;
+            video.src = img.src;
+        };
+
+        ws.onerror = function (error) {
+            console.error("WebSocket Error: ", error);
+        };
+    </script>
+</body>
+</html>

@@ -70,10 +70,11 @@ async def video_server(websocket, path):
 
 
 # 웹 소켓 서버 설정
-start_server = websockets.serve(send_data, ip_addr, 8766)
+start_server = websockets.serve(video_server, ip_addr, 8765)
 print(f"WebSocket 서버가 시작되었습니다. 클라이언트 연결을 기다립니다... (IP 주소: {ip_addr})")
-start_server2 = websockets.serve(video_server, ip_addr, 8765)
+start_server2 = websockets.serve(send_data, ip_addr, 8766)
 print(f"WebSocket 서버가 시작되었습니다. 클라이언트 연결을 기다립니다... (IP 주소: {ip_addr})")
+
 
 def func0():
     # 비동기 이벤트 루프 시작

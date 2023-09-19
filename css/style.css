@@ -2,23 +2,27 @@
     display: none;
 }
 
-#webcam1 {
+#cam1 {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 10%;
     width: 50%; 
-    height: 100%; 
+    height: 80%; 
 }
 
-#webcam2 {
+#cam2 {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 10%;
     width: 50%; 
-    height: 100%;
+    height: 80%;
 }
 
 #inputdata{
     position: absolute;
     bottom: 10px;
+}
+
+body{
+    background-color:lightslategray;
 }

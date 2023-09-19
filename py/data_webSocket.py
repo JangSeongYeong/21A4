@@ -1,8 +1,5 @@
-import cv2
-import base64
 import asyncio
 import websockets
-import numpy as np
 import socket
 
 # 현재 IP 주소 가져오기
@@ -19,29 +16,21 @@ def get_host_ip():
         s.close()
     return ip_addr
 
-# OpenCV로 웹캠 캡처
-cap = cv2.VideoCapture(0)
-
-# 웹 소켓 서버 설정
-async def video_server(websocket, path):
+async def send_data(websocket, path):
     print("WebSocket 클라이언트가 연결되었습니다.")  # 연결 시 출력할 메시지
     while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        # 이미지를 base64로 인코딩
-        _, buffer = cv2.imencode('.jpg', frame)
-        frame_encoded = base64.b64encode(buffer).decode('utf-8')
-
-        # 인코딩된 이미지 데이터를 클라이언트로 전송
-        await websocket.send(frame_encoded)
+        user_input = "시발"
+        await asyncio.sleep(2)
+        await websocket.send(user_input)
 
 # 현재 IP 주소 가져오기
 ip_addr = get_host_ip()
+print(f"Server running at ws://{ip_addr}:8766")
 
-start_server = websockets.serve(video_server, ip_addr, 8765)
+# 웹 소켓 서버 설정
+start_server = websockets.serve(send_data, ip_addr, 8766)
 print(f"WebSocket 서버가 시작되었습니다. 클라이언트 연결을 기다립니다... (IP 주소: {ip_addr})")
 
+# 비동기 이벤트 루프 시작
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

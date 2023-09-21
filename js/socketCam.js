@@ -4,12 +4,10 @@ const cam2 = document.querySelector("#cam2");
 const urlParams = new URLSearchParams(window.location.search);
 const ipAddress = urlParams.get('ip');
 
-
-const url = `ws://${ipAddress}:8765`;  // 파이썬 웹 소켓 주소
-const ws8765 = new WebSocket(url);
+const ws8765 = new WebSocket(`ws://${ipAddress}:8765`);
 
 ws8765.onopen = function () {
-    console.log("WebSocket is connected.");
+    console.log("WebSocket is connected 8765.");
 };
 
 ws8765.onmessage = function (event) {

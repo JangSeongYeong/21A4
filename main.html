@@ -3,14 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E1A4</title>
+    <title>E1I4</title>
     <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/modal.css"/>
+    
 </head>
 <body>
-    <img id="cam1">
-    <img id="cam2">
+    <div id="myModal" class="modal hidden">
+        <div class="modal-content">
+          <p>O번 카메라 부근에 신호가 들어왔습니다.</p> <!--수정필요-->
+          <input id="clearBtn" type="submit" value="해제">
+          <input type="submit" value="신고">
+        </div>
+    </div>
+
+    <div class="container">
+        <img id="cam1">
+        <img id="cam2">
+    </div>
 
     <script src="js/socketCam.js"></script>
     <script src="js/drCamSizeAdjustment.js"></script>
+    <script src="js/dataSend.js"></script>
 </body>
 </html>

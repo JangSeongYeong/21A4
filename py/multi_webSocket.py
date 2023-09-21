@@ -6,6 +6,7 @@ import websockets
 import numpy as np
 import socket
 
+#데이터 변경에 따른 JS화면 전환 테스트용
 global_data = "1"
 
 async def data_Change():
@@ -32,20 +33,13 @@ def get_host_ip():
 
 ip_addr = get_host_ip()
 
-async def send_data(websocket, path):
-    print("WebSocket 클라이언트가 연결되었습니다.")  # 연결 시 출력할 메시지    
-    while True:
-        user_input = await data_Change()
-        await asyncio.sleep(2)
-        await websocket.send(user_input)
-
 # OpenCV로 두 개의 웹캠 캡처
 cap1 = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(1)
 
 # 웹 소켓 서버 설정
 async def video_server(websocket, path):
-    print("WebSocket 클라이언트가 연결되었습니다.")  # 연결 시 출력할 메시지
+    print("WebSocket 클라이언트가 연결되었습니다.1")  # 연결 시 출력할 메시지
     while True:
         ret1, frame1 = cap1.read()
         ret2, frame2 = cap2.read()
@@ -68,12 +62,30 @@ async def video_server(websocket, path):
         # 인코딩된 이미지 데이터를 클라이언트로 전송
         await websocket.send(frame_encoded1 + ";" + frame_encoded2)  # 두 개의 비디오 프레임을 세미콜론으로 구분
 
+#데이터 전송
+async def send_data(websocket, path):
+    print("WebSocket 클라이언트가 연결되었습니다.2")  # 연결 시 출력할 메시지    
+    while True:
+        user_input = await data_Change()
+        await asyncio.sleep(10)
+        await websocket.send(user_input)
+
+async def handle_received_message(message):
+    print("Received message:", message)
+
+#데이터 수신
+async def receive_data(websocket, path):
+    print("webSocket 클라이언트 연결됨.3")
+    async for message in websocket:
+        await handle_received_message(message)
 
 # 웹 소켓 서버 설정
 start_server = websockets.serve(video_server, ip_addr, 8765)
-print(f"WebSocket 서버가 시작되었습니다. 클라이언트 연결을 기다립니다... (IP 주소: {ip_addr})")
+print(f"video서버가 시작되었습니다. 클라이언트 연결을 기다립니다... (IP 주소: {ip_addr})")
 start_server2 = websockets.serve(send_data, ip_addr, 8766)
-print(f"WebSocket 서버가 시작되었습니다. 클라이언트 연결을 기다립니다... (IP 주소: {ip_addr})")
+print(f"send서버가 시작되었습니다. 클라이언트 연결을 기다립니다... (IP 주소: {ip_addr})")
+start_server3 = websockets.serve(receive_data, ip_addr, 8767)
+print(f"receive서버가 시작되었습니다. 클라이언트 연결을 기다립니다... (IP 주소: {ip_addr})")
 
 
 def func0():
@@ -85,9 +97,15 @@ def func1():
     asyncio.get_event_loop().run_until_complete(start_server2)
     asyncio.get_event_loop().run_forever()
 
+def func2():
+    asyncio.get_event_loop().run_until_complete(start_server3)
+    asyncio.get_event_loop().run_forever()
+
 if __name__ == '__main__':
     p0 = Process(target=func0)
     p1 = Process(target=func1)
+    p2 = Process(target=func2)
     p0.start()
     p1.start()
+    p2.start()
     print("webSocket 준비완료")

@@ -1,0 +1,36 @@
+<!-- 경고창 디자인용 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커스텀 모달</title>
+    <link rel="stylesheet" href="css/modal.css"/>
+</head>
+<body>
+
+<button onclick="openModal()">경고창 열기</button>
+
+<div id="myModal" class="modal hidden">
+  <div class="modal-content">
+    <p>O번 카메라 부근에 신호가 들어왔습니다.</p>
+    <input type="submit" value="해제" onclick="closeModal()">
+    <input type="submit" value="신고">
+    <input type="submit" value="다른 신호가 들어왔습니다.">
+  </div>
+</div>
+
+<script>
+    function openModal() {
+        const modal = document.getElementById("myModal");
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+</script>
+
+</body>
+</html>

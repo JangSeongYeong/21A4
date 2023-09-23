@@ -20,17 +20,17 @@ ws8766.onopen = function () {
 
 ws8766.onmessage = (event) => {
     const Data = event.data
-    if (Data === "1") {
+    if (Data === "1") { 
         setWebcamSize(cam1, "100%");
         cam2.classList.add(HIDDEN_CLASSNAME);
         cam1.classList.remove(HIDDEN_CLASSNAME);
-        openModal();
-        console.log("cam1");
+        openModal(Data);
+        console.log("cam1"); //이 줄 기준 위에 5줄 함수화 시키기
     } else if (Data === "2") {
         setWebcamSize(cam2, "100%");
         cam1.classList.add(HIDDEN_CLASSNAME);
         cam2.classList.remove(HIDDEN_CLASSNAME);
-        openModal();
+        openModal(Data);
         console.log("cam2");
     }
 };

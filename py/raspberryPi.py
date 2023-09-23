@@ -1,21 +1,19 @@
 from multiprocessing import Process
+from playsound import playsound
+import numpy as np
 import cv2
 import base64
 import asyncio
 import websockets
-import numpy as np
 import socket
+import serial
+import time
 
 #데이터 변경에 따른 JS화면 전환 테스트용
-global_data = "1"
+global_data = '1'
+count = 0
+ser = serial.Serial('/dev/ttyACM0', 9600)
 
-async def data_Change():
-    global global_data
-    if global_data == "1":
-        global_data = "2"
-    else:
-        global_data = "1"
-    return global_data
 
 # 현재 IP 주소 가져오기
 def get_host_ip():
@@ -33,10 +31,21 @@ def get_host_ip():
 
 ip_addr = get_host_ip()
 
-# OpenCV로 두 개의 웹캠 캡처, 
-# 라즈베리파이의 연결하는 카메라가 1로 잡혀있어 라즈베리 파이에 연결시 0, 2로 잡아야함
+# OpenCV로 두 개의 웹캠 캡처
 cap1 = cv2.VideoCapture(0)
-cap2 = cv2.VideoCapture(1)
+cap2 = cv2.VideoCapture(2)
+cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+cap2.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+cap2.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
+#아두이노 시리얼 읽어오기
+async def read_serial_data():
+    global dataardu
+    while True:
+        data = ser.readline().decode('utf-8').rstrip()
+        print(f'아두이노에서 받은 데이터: {data}')
+        dataardu = data
 
 # 웹 소켓 서버 설정
 async def video_server(websocket, path):
@@ -63,21 +72,42 @@ async def video_server(websocket, path):
         # 인코딩된 이미지 데이터를 클라이언트로 전송
         await websocket.send(frame_encoded1 + ";" + frame_encoded2)  # 두 개의 비디오 프레임을 세미콜론으로 구분
 
+async def data_Change():
+    global global_data
+    while True:
+        dataardu = ser.readline().decode('utf-8').rstrip()
+        
+        if dataardu == 'danger_1':
+            global_data = '1'
+            playsound('/home/masgt/Desktop/ss/test1.mp3')
+        elif dataardu == 'danger_2':
+            global_data = '2'
+            playsound('/home/masgt/Desktop/ss/test1.mp3')
+        else:
+            global_data ='0'
+        
+        return global_data
+
 #데이터 전송(수정할 부분 압센서 서버로 넘기기)
 async def send_data(websocket, path):
     print("WebSocket 클라이언트가 연결되었습니다.2")  # 연결 시 출력할 메시지    
     while True:
         user_input = await data_Change() #1 2전환 1번화면 2번화면
-        await asyncio.sleep(5) #5초 대기
         await websocket.send(user_input)
 
 async def handle_received_message(message):
     print("Received message:", message)
+    commend = 'a'
+    ser.write(commend.encode())
+    time.sleep(0.1)
+    commend = 'b'
+    ser.write(commend.encode())
+    time.sleep(0.1)
 
 #데이터 수신(수정할 부분: 서버 -> 해제명령)
 async def receive_data(websocket, path):
     print("WebSocket 클라이언트가 연결되었습니다.3")
-    async for message in websocket: #message: 해제
+    async for message in websocket: #message: clear
         await handle_received_message(message)
 
 # 웹 소켓 서버 설정

@@ -37,7 +37,7 @@ function changeCam(focusCam, outCam, receivedData, reportBtn){
     setWebcamSize(focusCam, "100%");
     addHidden(outCam);
     openModal(receivedData);
-    removeHidden(reportBtn)
+    removeHidden(reportBtn);
 }
 
 // WebSocket 8765번 연결: 영상 전용 소켓
@@ -73,11 +73,10 @@ ws8766.onopen = function () {
     console.log("WebSocket is connected 8766.");
     resetWebcam();
 };
-
 ws8766.onmessage = (event) => {
-    const receivedData = event.data
+    const receivedData = event.data;
     if(crashValue === false){ // 신호가 들어와있는 상태에서 다른 신호가 들어오면 버튼 생성
-        if (focusCamValue !== receivedData && focusCamValue !== "0"){
+        if ((focusCamValue !== receivedData) && (focusCamValue !== "0") && (receivedData !== "0")){
             removeHidden(crashBtn);
         }
         if (receivedData === "1" && focusCamValue !== "2") { // 1번 신호가 들어오면 1번 화면 확대

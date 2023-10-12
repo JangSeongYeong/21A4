@@ -14,11 +14,11 @@ function openModal(cameraNumber) {
 }
 // 알림창 Close 및 상태 기본 값 초기화
 function closeModal() {
-    resetWebcam()
+    resetWebcam();
     addHidden(modal);
     addHidden(crashBtn);
-    addHidden(reportBtn1)
-    addHidden(reportBtn2)
+    addHidden(reportBtn1);
+    addHidden(reportBtn2);
     focusCamValue = "0";
     crashValue = false;
 }
@@ -58,8 +58,8 @@ const ws8767 = new WebSocket(`ws://${ipAddress}:8767`);
 
 ws8767.onopen = function () {
     console.log("WebSocket is connected 8767.");
-};
+}
 
 ws8767.onerror = function (error) {
     console.error("WebSocket Error: ", error);
-};
+}

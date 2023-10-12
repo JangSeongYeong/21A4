@@ -46,7 +46,7 @@ const ws8765 = new WebSocket(`ws://${ipAddress}:8765`);
 // 연결 성공
 ws8765.onopen = function () {
     console.log("WebSocket is connected 8765.");
-};
+}
 // 메시지를 수신할 때마다 실행
 ws8765.onmessage = function (event) {
     const frameData = event.data.split(";"); // 1.cam + ";" + 2.cam의 데이터를 받고 나누기
@@ -59,11 +59,11 @@ ws8765.onmessage = function (event) {
         img2.src = "data:image/jpeg;base64," + frameData[1];
         cam2.src = img2.src;
     }
-};
+}
 // 에러 발생 시 실행
 ws8765.onerror = function (error) {
     console.error("WebSocket Error: ", error);
-};
+}
 
 
 // WebSocket 8766번 연결: 데이터 수신 전용 소켓
@@ -72,7 +72,7 @@ const ws8766 = new WebSocket(`ws://${ipAddress}:8766`);
 ws8766.onopen = function () {
     console.log("WebSocket is connected 8766.");
     resetWebcam();
-};
+}
 ws8766.onmessage = (event) => {
     const receivedData = event.data;
     if(crashValue === false){ // 신호가 들어와있는 상태에서 다른 신호가 들어오면 버튼 생성
@@ -87,8 +87,8 @@ ws8766.onmessage = (event) => {
         }
         
     }
-};
+}
 
 ws8766.onerror = function (error) {
     console.error("WebSocket Error: ", error);
-};
+}

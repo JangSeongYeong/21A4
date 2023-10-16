@@ -19,6 +19,9 @@ function closeModal() {
     addHidden(crashBtn);
     addHidden(reportBtn1);
     addHidden(reportBtn2);
+    removeHidden(cam1Text);
+    removeHidden(cam2Text);
+    cam2Text.classList.remove("change_Location");
     focusCamValue = "0";
     crashValue = false;
 }
@@ -51,6 +54,9 @@ crashBtn.addEventListener("click", () => {
     resetWebcam();
     removeHidden(reportBtn1);
     removeHidden(reportBtn2);
+    removeHidden(cam1Text);
+    removeHidden(cam2Text);
+    cam2Text.classList.remove("change_Location");
 });
 
 // WebSocket 8767번 연결: 데이터 송신 전용 소켓

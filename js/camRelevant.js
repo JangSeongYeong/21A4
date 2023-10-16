@@ -1,6 +1,9 @@
 // ~Btn과 Modal은 modalControl에서 선언
 const cam1 = document.querySelector("#cam1");
 const cam2 = document.querySelector("#cam2");
+const cam1Text = document.querySelector("#cam1Text");
+const cam2Text = document.querySelector("#cam2Text");
+
 
 const HIDDEN_CLASSNAME = "hidden";
 let focusCamValue = "0";
@@ -81,9 +84,12 @@ ws8766.onmessage = (event) => {
         }
         if (receivedData === "1" && focusCamValue !== "2") { // 1번 신호가 들어오면 1번 화면 확대
             changeCam(cam1,cam2,receivedData,reportBtn1);
+            addHidden(cam2Text);
             }
         else if (receivedData === "2" && focusCamValue !== "1") { // 2번 신호가 들어오면 2번 화면 확대
             changeCam(cam2,cam1,receivedData,reportBtn2);
+            addHidden(cam1Text);
+            cam2Text.classList.add("change_Location"); // 카메라 2 택스트 위치 조정
         }
         
     }

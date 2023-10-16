@@ -1,4 +1,4 @@
-.hidden{
+.hidden {
     display: none;
 }
 
@@ -6,23 +6,47 @@
     position: absolute;
     left: 0;
     top: 10%;
-    width: 50%; 
-    height: 80%; 
+    width: 50%;
+    height: 80%;
 }
 
 #cam2 {
     position: absolute;
     right: 0;
     top: 10%;
-    width: 50%; 
+    width: 50%;
     height: 80%;
 }
 
-#inputdata{
+#inputdata {
     position: absolute;
     bottom: 10px;
 }
 
-body{
-    background-color:lightslategray;
+body {
+    background-color: lightslategray;
+}
+
+#cam1Text {
+    position: absolute;
+    left: 0;
+    top: 90%;
+    color: black;
+    font-size: 16px;
+}
+
+#cam2Text {
+    position: absolute;
+    right: 45%; /* 위치를 오른쪽에 정렬하도록 수정 */
+    top: 90%; /* 위치 조정을 원하는 곳으로 수정 */
+    color: black; /* 텍스트 색상을 원하는 색으로 수정 */
+    font-size: 16px; /* 원하는 글꼴 크기로 수정 */
+}
+
+.change_Location {
+    position: absolute;
+    left: 0;
+    top: 90%;
+    color: white;
+    font-size: 16px;
 }

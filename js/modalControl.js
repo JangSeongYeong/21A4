@@ -1,4 +1,5 @@
 const clearBtn = document.querySelector("#clearBtn"); // 해제 버튼
+const mainClearBtn = document.querySelector("#mainClearBtn"); //main페이지 해제 버튼
 const reportBtn1 = document.querySelector("#reportBtn1"); // 신고 1 버튼
 const reportBtn2 = document.querySelector("#reportBtn2"); // 신고 2 버튼
 const crashBtn = document.querySelector("#crashBtn"); // 다중 신호 수신 시 버튼
@@ -21,16 +22,21 @@ function closeModal() {
     addHidden(reportBtn2);
     removeHidden(cam1Text);
     removeHidden(cam2Text);
-    cam2Text.classList.remove("change_Location");
+    cam2Text.classList.remove("change_Location"); //텍스트 위치
     focusCamValue = "0";
     crashValue = false;
 }
 // 해제 버튼을 눌렀을 때
-clearBtn.addEventListener("click", () => {
+function clearAndSendWebSocketMessage() {
     const message = "clear";
     ws8767.send(message);
     closeModal();
-});
+}
+
+clearBtn.addEventListener("click", clearAndSendWebSocketMessage);
+mainClearBtn.addEventListener("click", clearAndSendWebSocketMessage);
+
+
 // 신고 버튼을 눌렀을 때
 function handleReportClick(location) {
     if (confirm(`정말로 위치 ${location}에 신고하시겠습니까?`)) {

@@ -1,65 +1,30 @@
+*{
+    /*모든 태그의 기본 마진과 기본 패딩을 삭제*/
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*준 값에 맞춰서 CSS하기 위해서 넣는 코드들*/
+    /* 폰트 */
+    font-family: Arial, sans-serif; 
+}
+/* 표시를 없애기 위해서 class 지정 */
 .hidden {
     display: none;
 }
 
-#cam1 {
-    position: absolute;
-    left: 0;
-    top: 10%;
-    width: 50%;
-    height: 80%;
-}
-
-#cam2 {
-    position: absolute;
-    right: 0;
-    top: 10%;
-    width: 50%;
-    height: 80%;
-}
-
-#inputdata {
-    position: absolute;
-    bottom: 10px;
-}
-
 body {
-    background-color: lightslategray;
+    background: lightslategray;
 }
 
-#cam1Text {
-    position: absolute;
-    left: 0;
-    top: 90%;
-    color: black;
-    font-size: 16px;
-}
-
-#cam2Text {
-    position: absolute;
-    right: 45%; /* 위치를 오른쪽에 정렬하도록 수정 */
-    top: 90%; /* 위치 조정을 원하는 곳으로 수정 */
-    color: black; /* 텍스트 색상을 원하는 색으로 수정 */
-    font-size: 16px; /* 원하는 글꼴 크기로 수정 */
-}
-
-.change_Location {
-    position: absolute;
-    left: 0;
-    top: 90%;
-    color: white;
-    font-size: 16px;
-}
-
-input[type="button"] {
+button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1.3rem;
     cursor: pointer;
     background-color: #3498db;
     color: #fff;
 }
-input[type="button"]:hover {
+button:hover {
     background-color: #2980b9;
 }

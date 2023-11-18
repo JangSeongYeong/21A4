@@ -1,0 +1,25 @@
+.camContainer{
+    display: flex;
+    width: 100%;
+    height: 85vh;
+    font-size: 1.5rem;
+}
+.camContainer .camera1{
+    width: 100%; /* 지정해줌으로써 camera2에 hidden class가 넣어졌을때 확대 됨*/
+}
+.camContainer .camera2{
+    width: 100%; /* 지정해줌으로써 camera1에 hidden class가 넣어졌을때 확대 됨*/
+}
+.camContainer .camera1 #cam1{
+    width: 100%;
+    height: 100%;
+}
+.camContainer .camera2 #cam2{
+    width: 100%;
+    height: 100%;
+}
+.centerBtn{
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+}

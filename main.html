@@ -5,29 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E1I4</title>
     <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/modal.css"/>
-    
 </head>
 <body>
+    <!-- 신호가 들어왔을 때 보이는 창으로 평소에는 hidden 상태 -->
     <div id="myModal" class="modal hidden">
         <div class="modal-content">
           <p>O번 카메라 위치에서 신호가 들어왔습니다.</p>
-          <input id="clearBtn" type="button" value="해제">
-          <input id="reportBtn1" class="hidden" type="button" value="위치1 신고">
-          <input id="reportBtn2" class="hidden" type="button" value="위치2 신고">
-          <input id="crashBtn" class="hidden" type="button" value="다른 신호가 들어왔습니다.">
+          <button id="clearBtn" type="submit">동작 해제</button>
+          <button id="reportBtn1" class="hidden" type="submit">위치1 신고</button>
+          <button id="reportBtn2" class="hidden" type="submit">위치2 신고</button>
+          <button id="crashBtn" class="hidden" type="submit">다른 신호가 들어왔습니다.</button>
         </div>
     </div>
 
-    <input id="mainClearBtn" type="button" value="해제">
-
-    <div id="camera1">
-        <img id="cam1" alt="cam1구역">
-        <p id="cam1Text">카메라 1</p> <!-- 카메라 1 텍스트 추가 -->
+    <div class="camContainer">
+        <div class="camera1">
+            <img id="cam1" alt="cam1구역">
+            <p id="cam1Text">카메라 1</p>
+        </div>
+        <div class="camera2">
+            <img id="cam2" alt="cam2구역">
+            <p id="cam2Text">카메라 2</p>
+        </div>
     </div>
-    <div id="camera2">
-        <img id="cam2" alt="cam2구역">
-        <p id="cam2Text">카메라 2</p>
+
+    <div class="centerBtn">
+        <button id="mainClearBtn" type="submit">동작 해제</button>
     </div>
 
     <script src="js/camRelevant.js"></script>

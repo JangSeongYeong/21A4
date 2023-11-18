@@ -1,3 +1,10 @@
+#-----------------------------
+
+# 라즈베리 파이가 없을때 사용했던 테스트 코드
+
+# 의문이 드는 코드는 raspberryPi.py 코드의 주석 참고
+
+# ------------------------------
 from multiprocessing import Process
 import cv2
 import base64
@@ -6,7 +13,9 @@ import websockets
 import numpy as np
 import socket
 
-#데이터 변경에 따른 JS화면 전환 테스트용
+# 데이터 변경에 따른 JS화면 전환 테스트용 
+# 1번 전송 -> 1번 화면 확대
+# 2번 전송 -> 2번 화면 확대
 global_data = "1"
 
 async def data_Change():
@@ -22,7 +31,6 @@ def get_host_ip():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.settimeout(0.1)
-        # doesn't even have to be reachable
         s.connect(("10.0.0.0", 80))
         ip_addr = s.getsockname()[0]
     except Exception:
@@ -33,8 +41,7 @@ def get_host_ip():
 
 ip_addr = get_host_ip()
 
-# OpenCV로 두 개의 웹캠 캡처, 
-# 라즈베리파이의 연결하는 카메라가 1로 잡혀있어 라즈베리 파이에 연결시 0, 2로 잡아야함
+# OpenCV로 두 개의 웹캠 캡처
 cap1 = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(1)
 
@@ -61,23 +68,24 @@ async def video_server(websocket, path):
         frame_encoded2 = base64.b64encode(buffer2).decode('utf-8')
 
         # 인코딩된 이미지 데이터를 클라이언트로 전송
-        await websocket.send(frame_encoded1 + ";" + frame_encoded2)  # 두 개의 비디오 프레임을 세미콜론으로 구분
+        # 두 개의 비디오 프레임을 ';'으로 구분
+        await websocket.send(frame_encoded1 + ";" + frame_encoded2)  
 
-#데이터 전송(수정할 부분 압센서 서버로 넘기기)
+# 웹 소켓 데이터 전송
 async def send_data(websocket, path):
     print("WebSocket 클라이언트가 연결되었습니다.2")  # 연결 시 출력할 메시지    
     while True:
-        user_input = await data_Change() #1 2전환 1번화면 2번화면
-        await asyncio.sleep(5) #5초 대기
+        user_input = await data_Change() # data 1, 2전환 1번화면 2번화면
+        await asyncio.sleep(5) # 5초 대기
         await websocket.send(user_input)
 
 async def handle_received_message(message):
     print("Received message:", message)
 
-#데이터 수신(수정할 부분: 서버 -> 해제명령)
+# 웹 소켓 데이터 수신
 async def receive_data(websocket, path):
     print("WebSocket 클라이언트가 연결되었습니다.3")
-    async for message in websocket: #message: 해제
+    async for message in websocket: # message: clear
         await handle_received_message(message)
 
 # 웹 소켓 서버 설정
